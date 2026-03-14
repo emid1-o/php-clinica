@@ -2,13 +2,15 @@
 
 namespace Luizlins\Projeto01\Modulos;
 
+use DateTimeImmutable;
+
 class Paciente {
 
     function __construct(
         private string $cpf,
         private string $nome,
         private array $telefone,
-        private string $dataNascimento
+        private DateTimeImmutable $dataNascimento
     ) {}
 
 }

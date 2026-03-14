@@ -15,18 +15,19 @@ $medico = new Medico(
 
 $telefone = new Telefone("86999920976");
 
+$dataNascimento = new DateTimeImmutable("1985-10-27");
 $paciente = new Paciente(
     "006 237 863 54",
     "Maria Antonia",
     [$telefone, $telefone, $telefone, $telefone],
-    "1985-10-27"
+    $dataNascimento
 );
 
+$dataConsulta = new DateTimeImmutable("2026-03-01 13:00"); 
 $consulta = new Consulta(
     $medico,
     $paciente,
-    "2026-03-01",
-    "13:00",
+    $dataConsulta,
     400.00
 );
 
