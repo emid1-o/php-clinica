@@ -1,103 +1,377 @@
-# Projeto-01: Sistema de Gestão Médica em PHP
+# 📋 Sistema de Gestão Médica em PHP
 
-## Descrição do Projeto
+Um projeto educacional de **Programação Orientada a Objetos (POO)** e arquitetura de software em PHP.
 
-Este é um projeto didático desenvolvido em PHP para demonstrar conceitos fundamentais de programação orientada a objetos (POO), arquitetura de software e persistência de dados. O sistema simula um **Sistema de Gestão Médica** simples, focando no gerenciamento de médicos, pacientes e consultas.
+---
 
-O projeto utiliza:
-- **PHP 8+** com tipagem forte e propriedades readonly.
-- **Composer** para autoloading PSR-4.
-- **SQLite** como banco de dados para simplicidade.
-- Padrões de arquitetura como **Domain-Driven Design (DDD)**, **Repository Pattern** e **Dependency Injection**.
+## 📌 O que é este projeto?
 
-Este projeto serve como referência para estudantes aprenderem sobre:
-- Estruturação de projetos PHP.
-- Separação de responsabilidades (Domínio vs Infraestrutura).
-- Interfaces e implementação de repositórios.
-- Conexão e operações básicas com banco de dados.
-- Validação de dados e formatação.
+Este é um sistema simples para gerenciar:
+- **Médicos** (CRM, nome, especialidade)
+- **Pacientes** (CPF, nome, telefone, data de nascimento)
+- **Consultas** (médico, paciente, data e valor)
 
-## Estrutura do Projeto
+O objetivo é **aprender** como estruturar um projeto PHP profissional usando boas práticas de desenvolvimento.
+
+---
+
+## 🎯 O que você vai aprender
+
+✅ **Programação Orientada a Objetos (POO)**
+- Classes, herança e interfaces
+- Encapsulamento e getters/setters
+
+✅ **Padrões de Arquitetura**
+- Domain-Driven Design (DDD) - organização do código por camadas
+- Repository Pattern - abstrair o acesso a dados
+- Factory Pattern - criação de objetos de forma centralizada
+
+✅ **Banco de Dados**
+- Como conectar PHP ao SQLite com PDO
+- Operações CRUD (Create, Read, Update, Delete)
+- Prepared Statements para segurança
+
+✅ **Autoloading com Composer**
+- PSR-4 - como organizar namespaces
+- Carregamento automático de classes
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```
 PROJETO-01/
-├── composer.json              # Configuração do Composer e autoload PSR-4
-├── README.md                  # Este arquivo
-├── banco.sqlite               # Banco de dados SQLite (criado manualmente)
-├── index.php                  # Script principal de exemplo
-├── medico.php                 # Script para criar a tabela 'medicos'
-├── conexao.php                # Exemplo de conexão PDO
-├── inserir-medico.php         # Exemplo de inserção via repositório
-├── recuperar-medicos.php      # Exemplo de listagem via repositório
-├── atualizar-medico.php       # Exemplo de atualização via repositório
-├── remover-medico.php         # Exemplo de remoção via repositório
-├── src/
-│   ├── Dominio/               # Camada de Domínio (Regras de Negócio)
-│   │   ├── Modulos/           # Entidades do Domínio
-│   │   │   ├── Consulta.php   # Classe Consulta
-│   │   │   ├── Medico.php     # Classe Medico
-│   │   │   └── Paciente.php   # Classe Paciente
-│   │   └── Repositorio/       # Interfaces de Repositório
-│   │       └── RepositorioMedicoInterface.php
-│   └── Infraestrutura/        # Camada de Infraestrutura (Implementações Técnicas)
-│       ├── Configuracoes/     # Configurações e Utilitários
-│       │   └── Telefone.php   # Classe para validação de telefones
-│       ├── Persistencia/      # Camada de Persistência
-│       │   └── FabricaConexao.php  # Factory para conexão PDO
-│       └── Repositorios/      # Implementações de Repositórios
-│           └── RepositorioMedico.php
-└── vendor/                    # Dependências geradas pelo Composer
+│
+├── composer.json                    # Configuração do Composer
+├── banco.sqlite                     # Banco de dados SQLite
+│
+├── index.php                        # Exemplo: criar objetos
+├── sql.php                          # Exemplo: criar tabelas no banco
+├── inserir-medico.php               # Exemplo: adicionar médico
+├── listar-medicos.php               # Exemplo: listar médicos
+├── atualizar-medico.php             # Exemplo: modificar médico
+├── remover-medico.php               # Exemplo: deletar médico
+│
+└── src/                             # Código da aplicação
+    │
+    ├── Dominio/                     # REGRAS DE NEGÓCIO (independent)
+    │   ├── Modulos/                 # Entidades (o coração do sistema)
+    │   │   ├── Medico.php           # Classe: representa um médico
+    │   │   ├── Paciente.php         # Classe: representa um paciente
+    │   │   └── Consulta.php         # Classe: representa uma consulta
+    │   │
+    │   └── Repositorios/            # Contratos (interfaces)
+    │       └── RepositorioMedicoInterface.php
+    │
+    └── Infraestrutura/              # DETALHES TÉCNICOS (implementação)
+        ├── Configuracoes/           # Utilitários
+        │   └── Telefone.php         # Validar e formatar telefones
+        │
+        ├── Persistencia/            # Conexão com banco
+        │   └── FabricaConexao.php   # Factory para PDO
+        │
+        └── Repositorios/            # Implementações (acesso a dados)
+            └── RepositorioMedico.php
 ```
 
-## Arquitetura e Conceitos
+> **💡 Dica:** A pasta `Dominio` contém regras de negócio (independente de tecnologia). A pasta `Infraestrutura` contém implementações técnicas (banco, cache, etc).
 
-### Domain-Driven Design (DDD)
-- **Domínio**: Representa o conhecimento do negócio (médicos, pacientes, consultas).
-- **Entidades**: Classes como `Medico`, `Paciente`, `Consulta` que encapsulam dados e comportamentos.
-- **Value Objects**: `Telefone` como um objeto de valor com validação.
+---
 
-### Repository Pattern
-- Abstrai o acesso aos dados.
-- Interface `RepositorioMedicoInterface` define contratos.
-- Implementação `RepositorioMedico` lida com PDO e SQLite.
+## 🔧 Requisitos
 
-### Separação de Camadas
-- **Domínio**: Independente de tecnologia (não conhece PDO ou SQLite).
-- **Infraestrutura**: Implementa detalhes técnicos (conexão, queries).
+- **PHP 8.0+** (com tipagem forte)
+- **Composer** (gerenciador de dependências)
+- **SQLite3** (banco de dados leve)
 
-## Requisitos do Sistema
+---
 
-- **PHP 8.0 ou superior** (para propriedades readonly e tipagem).
-- **Composer** instalado.
-- **SQLite3** disponível no sistema.
+## 🚀 Como Usar
 
-## Instalação e Configuração
+### 1️⃣ Instalação
 
-### 1. Clonagem e Dependências
 ```bash
-# Navegue até a pasta do projeto
+# Acesse a pasta do projeto
 cd PROJETO-01
 
-# Instale as dependências via Composer
+# Instale as dependências
 composer install
+
+# Atualize o autoload
 composer dump-autoload
 ```
 
-### 2. Configuração do Banco de Dados
-O projeto utiliza SQLite para simplicidade. Execute os comandos abaixo no terminal:
+### 2️⃣ Criar as Tabelas do Banco
 
 ```bash
-# Crie o arquivo do banco
-touch banco.sqlite
+# Execute o arquivo que cria as tabelas
+php sql.php
 
-# Abra o SQLite e crie a tabela
-sqlite3 banco.sqlite
+# Ou manualmente com SQLite:
+sqlite3 banco.sqlite < schema.sql
+```
 
-# Dentro do SQLite, execute:
-CREATE TABLE medicos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    crm TEXT NOT NULL,
-    nome TEXT NOT NULL,
+As tabelas criadas são:
+
+**Tabela: medicos**
+| id | crm | nome | especialidade |
+|---|---|---|---|
+| 1 | CRM/PI 1111 | Antonio Carlos | Otorrino |
+
+**Tabela: pacientes**
+| id | cpf | nome | telefone | data_nascimento |
+|---|---|---|---|---|
+| 1 | 12345678901 | Maria Silva | (86) 99999-9999 | 1990-05-15 |
+
+### 3️⃣ Executar os Exemplos
+
+**Criar um médico:**
+```bash
+php inserir-medico.php
+```
+
+**Listar médicos:**
+```bash
+php listar-medicos.php
+```
+
+**Atualizar um médico:**
+```bash
+php atualizar-medico.php
+```
+
+**Remover um médico:**
+```bash
+php remover-medico.php
+```
+
+**Visualizar objetos de exemplo:**
+```bash
+php index.php
+```
+
+---
+
+## 📚 Conceitos Principais
+
+### 🏗️ Domain-Driven Design (DDD)
+
+A aplicação é dividida em duas camadas principais:
+
+**Camada de Domínio** (`src/Dominio/`)
+- Contém as **regras de negócio**
+- Não depende de tecnologias (MySQL, Redis, etc)
+- Exemplo: classe `Medico` com dados e regras
+
+**Camada de Infraestrutura** (`src/Infraestrutura/`)
+- Contém **implementação técnica**
+- Lida com banco de dados, cache, API externa, etc
+- Exemplo: `RepositorioMedico` que acessa SQLite
+
+```
+┌─────────────────────┐
+│   Aplicação (UI)    │
+└──────────┬──────────┘
+           │
+┌──────────▼──────────┐
+│  DOMÍNIO (Regras)   │  ← Medico, Paciente, Consulta
+└──────────┬──────────┘
+           │
+┌──────────▼─────────────────┐
+│ INFRAESTRUTURA (Tecnologia)│  ← PDO, SQLite, Banco
+└────────────────────────────┘
+```
+
+### 📦 Repository Pattern
+
+Em vez de usar `PDO` diretamente, usamos um **repositório**:
+
+```php
+// ❌ ERRADO - Lógica de banco espalhado
+$stmt = $conexao->prepare("SELECT * FROM medicos");
+
+// ✅ CORRETO - Repositório centraliza isso
+$repositorio = new RepositorioMedico();
+$medicos = $repositorio->listar();
+```
+
+**Benefícios:**
+- Código mais limpo
+- Fácil testar (trocar implementação)
+- Fácil mudar de banco de dados
+
+### 🏭 Factory Pattern
+
+Centraliza a criação de objetos:
+
+```php
+// Em vez de usar PDO diretamente
+$pdo = FabricaConexao::criarConexao();
+// O código fica mais limpo e organizado
+```
+
+---
+
+## 🎓 Arquivos Explicados
+
+### `Medico.php` - Classe de Domínio
+```php
+class Medico {
+    function __construct(
+        private ?int $id,
+        private ?string $crm,
+        private ?string $nome,
+        private ?string $especialidade
+    ) {}
+    
+    // Getters para acessar dados
+    public function recuperarNome() { ... }
+}
+```
+**Aprenda:** Propriedades privadas, encapsulamento, getters
+
+### `RepositorioMedicoInterface.php` - Contrato
+```php
+interface RepositorioMedicoInterface {
+    public function listar(): array;
+    public function inserir(Medico $medico): bool;
+    public function deletar(Medico $medico);
+    public function atualizar(Medico $medico);
+}
+```
+**Aprenda:** Interfaces definem contratos (o que a classe deve fazer)
+
+### `RepositorioMedico.php` - Implementação
+```php
+class RepositorioMedico implements RepositorioMedicoInterface {
+    public function listar(): array {
+        $sql = "SELECT * FROM medicos";
+        return $this->conexao->query($sql);
+    }
+}
+```
+**Aprenda:** PDO, prepared statements, hidratação de dados
+
+### `Telefone.php` - Value Object
+```php
+class Telefone {
+    public function __construct(private string $numero) {
+        $digitos = preg_replace('/\D/', '', $numero);
+        if (strlen($digitos) !== 11) {
+            throw new Exception("Inválido");
+        }
+    }
+}
+```
+**Aprenda:** Validação, formatação, value objects
+
+---
+
+## 💡 Fluxo de Uma Operação
+
+### Adicionar um médico:
+
+```
+1. inserir-medico.php
+      ↓
+2. Criar objeto: $medico = new Medico(null, "CRM/PI 1111", "Dr. Silva", "Cardio")
+      ↓
+3. Chamar repositório: $repositorio->inserir($medico)
+      ↓
+4. RepositorioMedico executa SQL: INSERT INTO medicos (...)
+      ↓
+5. Banco salva os dados
+      ↓
+6. Retorna sucesso true/false
+```
+
+---
+
+## 🔐 Segurança
+
+Este projeto usa **Prepared Statements** para proteger contra SQL Injection:
+
+```php
+// ❌ INSEGURO
+$sql = "SELECT * FROM medicos WHERE nome = '" . $nome . "'";
+
+// ✅ SEGURO
+$stmt = $conexao->prepare("SELECT * FROM medicos WHERE nome = ?");
+$stmt->execute([$nome]);
+```
+
+---
+
+## 📝 Exemplo de Uso Completo
+
+```php
+<?php
+require_once "vendor/autoload.php";
+
+use Luizlins\Projeto01\Dominio\Modulos\Medico;
+use Luizlins\Projeto01\Infraestrutura\Repositorios\RepositorioMedico;
+
+// 1. Criar um médico
+$medico = new Medico(
+    null,
+    "CRM/PI 2024",
+    "Dr. João Silva",
+    "Cardiologista"
+);
+
+// 2. Usar o repositório
+$repositorio = new RepositorioMedico();
+
+// 3. Inserir no banco
+$sucesso = $repositorio->inserir($medico);
+
+if ($sucesso) {
+    echo "Médico inserido com ID: " . $medico->recuperarId();
+} else {
+    echo "Erro ao inserir!";
+}
+
+// 4. Listar todos
+$todos = $repositorio->listar();
+foreach ($todos as $med) {
+    echo $med->recuperarNome() . " - " . $med->recuperarEspecialidade();
+}
+```
+
+---
+
+## 🎯 Próximos Passos para Aprender
+
+1. **Adicione validação** nas classes
+2. **Implemente tratamento de erros** com try/catch
+3. **Crie testes unitários** com PHPUnit
+4. **Implemente logging** de operações
+5. **Use migrations** para versionamento do banco
+6. **Crie uma API REST** com o repositório
+
+---
+
+## 📚 Referências
+
+- [PHP Orientado a Objetos](https://www.php.net/manual/pt_BR/language.oop5.php)
+- [Composer PSR-4](https://getcomposer.org/doc/)
+- [PDO - PHP Data Objects](https://www.php.net/manual/pt_BR/book.pdo.php)
+- [Domain-Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design)
+- [Repository Pattern](https://refactoring.guru/design-patterns/repository)
+
+---
+
+## 👨‍💼 Autor
+
+**LuizLins** - Projeto educacional para aprendizado de POO e arquitetura em PHP
+
+**Email:** luizmagao@gmail.com
+
+---
+
+## 📝 Licença
+
+Este projeto é de código aberto e pode ser usado livremente para fins educacionais.
     especialidade TEXT NOT NULL
 );
 
