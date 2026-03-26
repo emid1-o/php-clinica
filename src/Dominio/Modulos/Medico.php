@@ -1,6 +1,6 @@
 <?php
 
-namespace Luizlins\Projeto01\Dominio\Modulos;
+namespace emidio\Projeto01\Dominio\Modulos;
 
 class Medico {
 

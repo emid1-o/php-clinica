@@ -1,6 +1,6 @@
 <?php
 
-namespace Luizlins\Projeto01\Infraestrutura\Configuracoes;
+namespace emidio\Projeto01\Infraestrutura\Configuracoes;
 
 class Telefone
 {

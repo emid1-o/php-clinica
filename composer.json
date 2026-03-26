@@ -1,14 +1,14 @@
 {
-    "name": "luizlins/projeto-01",
+    "name": "emidio/projeto-01",
     "autoload": {
         "psr-4": {
-            "Luizlins\\Projeto01\\": "src/"
+            "emidio\\Projeto01\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "LuizLins",
-            "email": "luizmagao@gmail.com"
+            "name": "emidio",
+            "email": "emidiolop5@gmail.com"
         }
     ],
     "require": {}

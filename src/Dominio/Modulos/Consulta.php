@@ -1,18 +1,39 @@
 <?php
+namespace emidio\Projeto01\Dominio\Modulos;
 
-namespace Luizlins\Projeto01\Dominio\Modulos;
-
-use Luizlins\Projeto01\Dominio\Modulos\Medico;
-use Luizlins\Projeto01\Dominio\Modulos\Paciente;
 use DateTimeImmutable;
 
 class Consulta {
+    private $id;
 
-    function __construct(
+    public function __construct(
         private Medico $medico,
         private Paciente $paciente,
         private DateTimeImmutable $data,
         private float $valor
     ) {}
 
+    public function recuperarId() {
+        return $this->id;
+    }
+
+    public function definirId($id) {
+        $this->id = $id;
+    }
+
+    public function recuperarMedico() {
+        return $this->medico;
+    }
+
+    public function recuperarPaciente() {
+        return $this->paciente;
+    }
+
+    public function recuperarData() {
+        return $this->data;
+    }
+
+    public function recuperarValor() {
+        return $this->valor;
+    }
 }

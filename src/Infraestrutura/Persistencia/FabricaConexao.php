@@ -1,6 +1,6 @@
 <?php
 
-namespace Luizlins\Projeto01\Infraestrutura\Persistencia;
+namespace emidio\Projeto01\Infraestrutura\Persistencia;
 
 use PDO;
 
